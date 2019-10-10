@@ -6,6 +6,7 @@
 #include<QFileDialog>
 #include "panel.h"
 #include "herramientas.h"
+#include <QVector2D>
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class Principal; }
@@ -20,10 +21,11 @@ public:
     ~Principal();
 protected:
     QWidget *widget_panel;
-    QWidget *widget_herramienta;
 
 protected slots:
     void on_nuevaImagen();
+    void on_importar();
+    void on_nuevoSpritesheet();
 signals:
     void signal_imagen(QString url);
 
