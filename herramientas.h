@@ -26,6 +26,8 @@ private:
 public slots:
     void editar_centros(QVector2D centro);
     void dar_puntos_texto(QVector2D punto);
+    void limpieza_campos();
+
 signals:
     void enviar_centros(QVector2D centro);
     void pedir_centro();
@@ -34,6 +36,8 @@ signals:
     void editar_tipo(int id);
 
     void enviar_eliminar_punto(int index);
+
+    void enviar_limpieza();
 
 private slots:
     void on_btn_guardar_centro_clicked();
@@ -44,6 +48,7 @@ private slots:
     void on_rb1_clicked();
     void on_rb2_clicked();
     void on_btn_eliminar_punto_clicked();
+    void on_btn_limpiar_clicked();
 };
 
 #endif // HERRAMIENTAS_H

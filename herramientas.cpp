@@ -9,11 +9,11 @@ herramientas::herramientas(QWidget *parent) :
 
     ui->setupUi(this);
 
-    /*ui->txt_centrox->setValidator( new QDoubleValidator(0, max, 2, this) );
-    ui->txt_centroy->setValidator( new QDoubleValidator(0, max, 2, this) );
+    ui->txt_centrox->setValidator( new QIntValidator(0, max, this) );
+    ui->txt_centroy->setValidator( new QIntValidator(0, max, this) );
 
-    ui->txt_puntox->setValidator( new QDoubleValidator(0, max, 2, this) );
-    ui->txt_puntoy->setValidator( new QDoubleValidator(0, max, 2, this) );*/
+    ui->txt_puntox->setValidator( new QIntValidator(0, max, this) );
+    ui->txt_puntoy->setValidator( new QIntValidator(0, max, this) );
 }
 
 herramientas::~herramientas()
@@ -47,13 +47,21 @@ void herramientas::on_btn_reiniciar_centro_clicked()
 void herramientas::cambiar_spinner_max(int count)
 {
 
-    this->ui->spinner->setMaximum(count);
-
-    if(!ui->spinner->isEnabled())
+    if(count>=0)
     {
-        cambiar_estado_puntos(true);
-        emit pedir_punto_posicion(0);
+        this->ui->spinner->setMaximum(count);
 
+        if(!ui->spinner->isEnabled())
+        {
+            cambiar_estado_puntos(true);
+            emit pedir_punto_posicion(0);
+
+        }
+    }
+    else
+    {
+        cambiar_estado_puntos(false);
+        limpieza_campos();
     }
 
 }
@@ -109,8 +117,35 @@ void herramientas::on_rb2_clicked()
 
 void herramientas::on_btn_eliminar_punto_clicked()
 {
-    emit enviar_eliminar_punto(ui->spinner->value());
+    qDebug()<<ui->spinner->maximum();
 
-    emit pedir_punto_posicion(0);
-    ui->spinner->setValue(0);
+    if(ui->spinner->maximum()==0)
+    {
+        emit enviar_eliminar_punto(ui->spinner->value());
+
+
+    }
+    else
+    {
+        emit enviar_eliminar_punto(ui->spinner->value());
+
+        emit pedir_punto_posicion(0);
+        ui->spinner->setValue(0);
+    }
+
+}
+
+void herramientas::on_btn_limpiar_clicked()
+{
+    emit enviar_limpieza();
+}
+
+void herramientas::limpieza_campos()
+{
+    cambiar_estado_puntos(false);
+    ui->txt_centrox->setText("");
+    ui->txt_centroy->setText("");
+    ui->txt_puntox->setText("");
+    ui->txt_puntoy->setText("");
+
 }

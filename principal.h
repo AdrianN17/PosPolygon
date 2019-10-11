@@ -4,9 +4,13 @@
 #include <QMainWindow>
 #include<QDebug>
 #include<QFileDialog>
+#include <QVector2D>
+#include <QMessageBox>
+
 #include "panel.h"
 #include "herramientas.h"
-#include <QVector2D>
+#include "datos.h"
+#include "extra.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class Principal; }
@@ -20,7 +24,8 @@ public:
     Principal(QWidget *parent = nullptr);
     ~Principal();
 protected:
-    QWidget *widget_panel;
+    datos *d_dato;
+    panel *panel_w;
 
 protected slots:
     void on_nuevaImagen();
@@ -28,6 +33,7 @@ protected slots:
     void on_nuevoSpritesheet();
 signals:
     void signal_imagen(QString url);
+    void signal_spritesheet(QString url,int x, int y, int w, int h);
 
 private:
     Ui::Principal *ui;
